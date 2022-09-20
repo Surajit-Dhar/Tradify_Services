@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +35,58 @@
   to {
     transform: rotate(360deg);
   }
+} */
+
+.main{
+  width:892px;
+  background-color: #baf4d9;
+  display:flex;
+  box-shadow: "0px 1px 5px rgba(0, 0, 0, 0)";
+  border-radius: 5px;
+  margin-left: 18%;
+}
+.main-1{
+  
+  flex:1;
+  height:45px;
+  margin:9px;
+  padding-bottom: 15px;
+}
+.m1{
+  border:1px solid #e8e8e8;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.m1:hover{
+  box-shadow: 0px 5px 15px rgba(0,0,0,0.3);
+  border-left: 5px solid #4d64a4;
+  
+}
+.t1{
+  font-size: 13px;
+  background-color: orangered;
+  color:white;
+  padding: 4px;
+  border-radius: 4px;
+  display: inline-block;
+  font-weight: 550;
+  
+}
+.skill{
+  height:27px;
+  font-size: 14px;
+  padding: 6px;
+  border-radius: 5px;
+  font-weight: 600;
+  color:white;
+  background-color: black;
+}
+.main-3{
+    flex:1;
+    height:53px;
+    margin:4px;
+    padding-bottom: 15px;
+    
+    
+  
 }
