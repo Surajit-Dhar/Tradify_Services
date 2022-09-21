@@ -9,15 +9,24 @@ export default props => {
     const [jobData, setJobdata] = useState({
       
       title: "",
-      type: "",
+      type: "Full-Time",
       companyName: "",
       companyUrl: "",
-      location: "",
+      location: "Office-mode",
       descripstion:"",
       link: "",
       skills: [],
       
     });
+    const handleChange = (e) => {
+        e.preventDefault();
+        setJobdata(el => ({...el , [e.target.name]: e.target.value}));
+    }
+    const addRemoveSkill = skill => jobData.skills.includes(skill)?
+    setJobdata( el => ({...el , skills: el.skills.filter((s) => s != skill)}))
+    :
+    setJobdata((elem) => ({...elem, skills: elem.skills.concat(skill)}));
+    
     const skills =[
         "javascript",
         "React Js",
@@ -27,6 +36,7 @@ export default props => {
         "SQL"
 
     ]
+    console.log(jobData);
     return (
         <Dialog open={true} fullWidth>
             <DialogTitle>
@@ -38,7 +48,8 @@ export default props => {
             <DialogContent>
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
-                        <FilledInput 
+                        <FilledInput
+                        onChange={handleChange} 
                         name="title"
                         value={jobData.title}
                         autoComplete="off" 
@@ -47,9 +58,10 @@ export default props => {
                     </Grid>
                     <Grid item xs={6}>
                     <Select 
+                    onChange={handleChange} 
                     name="type"
                     value={jobData.type}
-                    fullWidth className="main-3" disableUnderline variant="filled" pt={5} defaultValue="Full-Time">
+                    fullWidth className="main-3" disableUnderline variant="filled" pt={5} >
                         <MenuItem value="Part-Time">Part-Time</MenuItem>
                         <MenuItem value="Full-Time">Full-Time</MenuItem>
                         <MenuItem value="Internship">Internship</MenuItem>
@@ -57,14 +69,16 @@ export default props => {
 
                     </Grid>
                     <Grid item xs={6}>
-                        <FilledInput 
+                        <FilledInput
+                        onChange={handleChange} 
                         name="companyName"
                         value={jobData.companyName}
                         autoComplete="off" placeholder="Company name *" disableUnderline fullWidth/>
 
                     </Grid>
                     <Grid item xs={6}>
-                        <FilledInput 
+                        <FilledInput
+                        onChange={handleChange} 
                          name="companyUrl"
                          value={jobData.companyUrl}
                         autoComplete="off" 
@@ -73,16 +87,18 @@ export default props => {
                     </Grid>
                     <Grid item xs={6}>
                     <Select 
+                    onChange={handleChange} 
                     name="location"
                     value={jobData.location}
-                    fullWidth className="main-3" disableUnderline variant="filled" defaultValue="Office-mode">
+                    fullWidth className="main-3" disableUnderline variant="filled">
                         <MenuItem value="Work-from-home">Work-from-home</MenuItem>
                         <MenuItem value="Office-mode">Office-mode</MenuItem>
                         <MenuItem value="Hybrid">Hybrid</MenuItem>
                     </Select>
                     </Grid>
                     <Grid item xs={6}>
-                        <FilledInput 
+                        <FilledInput
+                        onChange={handleChange} 
                         name="link"
                         value={jobData.link}
                         autoComplete="off" placeholder="Job link *" disableUnderline fullWidth/>
@@ -90,6 +106,7 @@ export default props => {
                     </Grid>
                     <Grid item xs={12}>
                         <FilledInput
+                        onChange={handleChange}
                         name="description"
                         value={jobData.descripstion} 
                         autoComplete="off"
@@ -103,7 +120,7 @@ export default props => {
                 <Box mt={2}>
                     <Typography>Skills</Typography>
                     <Box display="flex">
-                        {skills.map((el) => <Box className="skill-2" ml={1.5} key={el}>{el}</Box>)}
+                        {skills.map((el) => <Box onClick={() => addRemoveSkill(el)}  className="skill-2" ml={1.5} key={el}>{el}</Box>)}
                     </Box>
 
                 </Box>
