@@ -1,11 +1,12 @@
 import React, {useState} from "react";
-import {Box, Grid, Dialog, FilledInput, Select, MenuItem, DialogTitle, DialogContent, DialogActions, Typography, Button} from "@mui/material";
+import {Box, Grid, Dialog, FilledInput, Select, MenuItem, DialogTitle, DialogContent, DialogActions, Typography, Button, CircularProgress} from "@mui/material";
 import "../App.css";
 
 
 
 
 export default props => {
+    const [loading, setLoading] = useState(false);
     const [jobData, setJobdata] = useState({
       
       title: "",
@@ -26,6 +27,29 @@ export default props => {
     setJobdata( el => ({...el , skills: el.skills.filter((s) => s != skill)}))
     :
     setJobdata((elem) => ({...elem, skills: elem.skills.concat(skill)}));
+
+    const handleSubmit = async () => {
+        for(const field in jobData){
+            if(typeof jobData[field] === "string" && !jobData[field]) return;
+        }if(!jobData.skills.length) return ;
+        setLoading(true);
+        await props.postJob(jobData)
+        setLoading(false);
+    }
+    const close = () => {
+        setJobdata({
+            title: "",
+            type: "Full-Time",
+            companyName: "",
+            companyUrl: "",
+            location: "Office-mode",
+            descripstion:"",
+            link: "",
+            skills: [],
+        })
+        setLoading(false);
+        props.closeJob();
+    }
     
     const skills =[
         "javascript",
@@ -38,11 +62,11 @@ export default props => {
     ]
     console.log(jobData);
     return (
-        <Dialog open={true} fullWidth>
+        <Dialog open={props.open} fullWidth>
             <DialogTitle>
                 <Box display="flex" justifyContent="space-between" alignItems="center">
                     Post Job
-                    <img height="35px" width="35px" src="https://img.icons8.com/external-neu-royyan-wijaya/2x/external-cancel-neu-interface-neu-royyan-wijaya-3.png"/>
+                    <img onClick={close} style={{cursor:"pointer"}} height="35px" width="35px" src="https://img.icons8.com/external-neu-royyan-wijaya/2x/external-cancel-neu-interface-neu-royyan-wijaya-3.png"/>
                 </Box>
             </DialogTitle>
             <DialogContent>
@@ -107,7 +131,7 @@ export default props => {
                     <Grid item xs={12}>
                         <FilledInput
                         onChange={handleChange}
-                        name="description"
+                        name="descripstion"
                         value={jobData.descripstion} 
                         autoComplete="off"
                         multiline
@@ -128,7 +152,14 @@ export default props => {
             <DialogActions>
                 <Box width="100%" display="flex" justifyContent="space-between" alignItems="center">
                     <Typography color="red" variant="caption" ml={2}>* Required field</Typography>
-                    <Button disableElevation variant="primary" style={{backgroundColor:"#3498db", color:"white",marginRight:"13px"}} >Add Job</Button>
+                    <Button onClick={handleSubmit}
+                    disabled={loading}
+                     disableElevation variant="primary" style={{backgroundColor:"#3498db", color:"white",marginRight:"13px"}} >
+                        {
+                            loading ? <CircularProgress size={22}/>:
+                            "Add Job"
+
+                        }</Button>
                 </Box>
             </DialogActions>
         </Dialog>

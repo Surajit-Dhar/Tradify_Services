@@ -7,13 +7,15 @@ import Search from './components/Search';
 import JobList from './components/JobList';
 import Newjob from './components/Newjob';
 //import Details from "./data";
-import  firestore from './firebase/config';
+import  {firestore,firebase} from './firebase/config';
 
 function App() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const fetchjobs = async () => {
+    setLoading(true);
     const req = await firestore.collection('jobs').orderBy('postedOn', 'desc').get();
     //console.log(req);
     const result = req.docs.map(job => ({...job.data(),  id: job.id, postedOn: Math.abs(job.data().postedOn.toDate()) }));
@@ -21,13 +23,20 @@ function App() {
     setData(result);
     setLoading(false);
   };
+
+  const postJob = async jobData => {
+      await firestore.collection('jobs').add({...jobData, postedOn: firebase.firestore.FieldValue.serverTimestamp() });
+      fetchjobs()
+  }
+
+
   useEffect(() => {
     fetchjobs();
   },[])
   return (
     <ThemeProvider theme={theme}>
-      <Header/>
-      <Newjob/>
+      <Header openNewJob={() => setOpen(true)}/>
+      <Newjob closeJob={() => setOpen(false)} open={open} postJob={postJob}/>
       <Grid container justify="center">
         <Grid item xs={10}>
            <Search/>

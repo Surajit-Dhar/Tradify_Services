@@ -18,5 +18,5 @@ const firebaseConfig = {
   const firestore = firebaseApp.firestore();
   //const analytics = getAnalytics(app);
 
-  export default firestore;
+  export {firestore, firebase};
  

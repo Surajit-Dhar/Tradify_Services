@@ -8,7 +8,7 @@ export default props => (
       <Grid item xs={11} style={{marginLeft:"50px"}}>
         <Box display="flex" justifyContent="space-between">
         <Typography variant="h5">Welcome To Job Protal</Typography>
-        <Button variant="contained" style={{padding:"3px 15px"}}>Add Job</Button>
+        <Button onClick={props.openNewJob} variant="contained" style={{padding:"3px 15px"}}>Add Job</Button>
 
         </Box>
       </Grid>  
