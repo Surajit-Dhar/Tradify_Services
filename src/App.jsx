@@ -27,7 +27,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Header/>
-      {/* <Newjob/> */}
+      <Newjob/>
       <Grid container justify="center">
         <Grid item xs={10}>
            <Search/>
