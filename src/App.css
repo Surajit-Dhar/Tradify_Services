@@ -80,13 +80,28 @@
   font-weight: 600;
   color:white;
   background-color: black;
+  cursor: pointer;
+}
+.skill-2{
+  height:25px;
+  font-size: 14px;
+  padding: 4px;
+  border-radius: 5px;
+  font-weight: 600;
+  color:black;
+  border:1px solid black;
+  cursor: pointer;
+}
+.skill-2:nth-child(1){
+  margin-left: 0px;
+}
+.skill-2:hover{
+  color:white;
+  background-color: black;
 }
 .main-3{
     flex:1;
     height:53px;
     margin:4px;
     padding-bottom: 15px;
-    
-    
-  
 }

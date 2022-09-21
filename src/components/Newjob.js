@@ -1,6 +1,8 @@
 import React from "react";
-import {Box, Grid, Dialog, FilledInput, Select, MenuItem, DialogTitle, DialogContent, DialogActions, Typography} from "@mui/material";
-import "../App.css"
+import {Box, Grid, Dialog, FilledInput, Select, MenuItem, DialogTitle, DialogContent, DialogActions, Typography, Button} from "@mui/material";
+import "../App.css";
+
+
 
 
 export default props => {
@@ -9,14 +11,18 @@ export default props => {
         "React Js",
         "Angular js",
         "Node js",
-        "TypeScript",
         "FireBase",
         "SQL"
 
     ]
     return (
-        <Dialog open={true} fullWidth>
-            <DialogTitle>Post Job</DialogTitle>
+        <Dialog open={false} fullWidth>
+            <DialogTitle>
+                <Box display="flex" justifyContent="space-between" alignItems="center">
+                    Post Job
+                    <img height="35px" width="35px" src="https://img.icons8.com/external-neu-royyan-wijaya/2x/external-cancel-neu-interface-neu-royyan-wijaya-3.png"/>
+                </Box>
+            </DialogTitle>
             <DialogContent>
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
@@ -62,11 +68,17 @@ export default props => {
                 <Box mt={2}>
                     <Typography>Skills</Typography>
                     <Box display="flex">
-                        {skills.map((el) => <Box key={el}>{el}</Box>)}
+                        {skills.map((el) => <Box className="skill-2" ml={1.5} key={el}>{el}</Box>)}
                     </Box>
 
                 </Box>
             </DialogContent>
+            <DialogActions>
+                <Box width="100%" display="flex" justifyContent="space-between" alignItems="center">
+                    <Typography color="red" variant="caption" ml={2}>* Required field</Typography>
+                    <Button disableElevation variant="primary" style={{backgroundColor:"#3498db", color:"white",marginRight:"13px"}} >Add Job</Button>
+                </Box>
+            </DialogActions>
         </Dialog>
     )
 }
