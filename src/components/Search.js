@@ -1,7 +1,8 @@
-import React from "react";
-import {Box, Select, MenuItem} from "@mui/material";
+import React,{useState} from "react";
+import {Box, Select, MenuItem,CircularProgress } from "@mui/material";
 import "../App.css"
 import styled from "styled-components";
+import { async } from "@firebase/util";
 
 // Styled component named StyledButton
 const StyledButton = styled.button`
@@ -25,21 +26,43 @@ const StyledButton = styled.button`
 // }));
 
 
-const Search = () => {
+const Search = (props) => {
+  const [loading, setLoading] = useState(false);
+  const [jobSearch, setJobSearch] = useState({
+    type:"Full-Time",
+    location:"Office-mode"
+  })
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    setJobSearch(el => ({...el , [e.target.name]: e.target.value}));
+}
+
+const search = async () => {
+  setLoading(true);
+  await props.fetchJobCustom(jobSearch);
+  setLoading(false);
+}
   // const Classes = useStyles();
   return (
     <Box p={1} mt={-2} mb={2} className="main">
-        <Select className="main-1" disableUnderline variant="filled" defaultValue="Full-Time">
+        <Select onChange={handleChange} name="type" value={jobSearch.type}className="main-1" disableUnderline variant="filled" >
             <MenuItem value="Part-Time">Part-Time</MenuItem>
             <MenuItem value="Full-Time">Full-Time</MenuItem>
             <MenuItem value="Internship">Internship</MenuItem>
         </Select>
-        <Select className="main-1" disableUnderline variant="filled" defaultValue="Office-mode">
+        <Select onChange={handleChange} name="location" value={jobSearch.location} className="main-1" disableUnderline variant="filled" >
             <MenuItem value="Work-from-home">Work-from-home</MenuItem>
             <MenuItem value="Office-mode">Office-mode</MenuItem>
             <MenuItem value="Hybrid">Hybrid</MenuItem>
         </Select>
-        <StyledButton variant="contained" className="search">FILTER</StyledButton>
+        <StyledButton onClick={search} disabled={loading} variant="contained" className="search">
+        {
+            loading ? <CircularProgress size={22}/>:
+            "FILTER"
+
+        }
+        </StyledButton>
     </Box>
   )
 }

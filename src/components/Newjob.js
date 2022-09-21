@@ -60,7 +60,7 @@ export default props => {
         "SQL"
 
     ]
-    console.log(jobData);
+   
     return (
         <Dialog open={props.open} fullWidth>
             <DialogTitle>

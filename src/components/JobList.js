@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import {Box, Grid, Typography, Button} from "@mui/material";
 import {differenceInMinutes} from "date-fns"
 import "../App.css";
@@ -6,6 +6,12 @@ import "../App.css";
 
 
 export default props => {
+    const [save , setSave] = useState(false)
+
+    const applyJob =() => {
+        alert("Sucessfully Applied...");
+        setSave(true);
+    }
     return (
         <Box ml={23.5} p={1} style={{width:"895px"}} className="m1">
             <Grid container>
@@ -26,7 +32,16 @@ export default props => {
                     </Box>
                     
                     <Box mt={2}>
-                        <Button variant="primary" style={{backgroundColor:"#3498db", color:"white"}}>Quick View</Button>
+                        {
+                            save? 
+                            <Button disabled={true} variant="primary" style={{backgroundColor:"#b5eecc", color:"white"}}>
+                            Applied
+                           </Button>
+                        :
+                        <Button onClick={applyJob} variant="primary" style={{backgroundColor:"#3498db", color:"white"}}>
+                            Apply
+                        </Button>
+                        }
                     </Box>
                     
                 </Grid>               
